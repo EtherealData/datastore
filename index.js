@@ -66,7 +66,7 @@ function webserver() {
 									});
 									break;
 								}
-								db.collection(collection).insertOne(JSON.parse(assembledQuery), (err, result) => {
+								db.collection(collection).insertOne(assembledQuery, (err, result) => {
 									res.statusCode = 200;
 									res.end(JSON.stringify({
 										status: 'success',
