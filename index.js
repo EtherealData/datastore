@@ -87,14 +87,14 @@ function webserver() {
 								});
 								break;
 							case 'delete':
-								if(!query || !assembledQuery){
+								if(!assembledQuery){
 									res.statusCode = 401;
 									res.end(JSON.stringify({
 										status:'error',
 										result: 'Deletion of an entire collection is currently locked'
 									}))
 								}
-								db.collection(collection).deleteOne(JSON.parse(assembledQuery), (err, result) => {
+								db.collection(collection).deleteOne(assembledQuery, (err, result) => {
 									if(err) {
 										res.statusCode = 401;
 										res.end(JSON.stringify({
