@@ -47,6 +47,9 @@ function webserver() {
 					assembledQuery = assemble(query),
 					assembledWriteData = assemble(writeData),
 					handle = () => {
+						(typeof assembledQuery === 'string') && JSON.parse(assembledQuery);
+						(typeof assembledWriteData === 'string') && JSON.parse(assembledWriteData);
+							
 						switch(operation) {
 							case 'create':
 								if(!assembledQuery) {
