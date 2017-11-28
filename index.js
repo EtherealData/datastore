@@ -7,7 +7,7 @@ let mongo = require('mongodb'),
 		'emails'
 	],
 	store = {},
-	http = require('http'),
+	http = require('https'),
 	hostname = '0.0.0.0',
 	port = 80,
 	server = null;
