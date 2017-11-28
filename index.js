@@ -47,6 +47,7 @@ function webserver() {
 					assembledQuery = assemble(query),
 					assembledWriteData = assemble(writeData),
 					handle = () => {
+
 						(typeof assembledQuery === 'string') && JSON.parse(assembledQuery);
 						(typeof assembledWriteData === 'string') && JSON.parse(assembledWriteData);
 							
@@ -79,7 +80,7 @@ function webserver() {
 								break;
 							case 'read':
 								// let _query = 
-								db.collection(collection).find(JSON.parse(assembledQuery)).toArray((err, result) => {
+								db.collection(collection).find(assembledQuery).toArray((err, result) => {
 									if(result){
 										res.statusCode = 200;
 										res.end(JSON.stringify({
@@ -114,7 +115,7 @@ function webserver() {
 								break;
 							case 'update':
 								let update = (mergedWriteData) => {
-									db.collection(collection).updateOne(JSON.parse(assembledQuery), mergedWriteData, (err, result) => {
+									db.collection(collection).updateOne(assembledQuery, mergedWriteData, (err, result) => {
 										if(err) {
 											res.statusCode = 401;
 											res.end(JSON.stringify({
@@ -129,7 +130,7 @@ function webserver() {
 										}))
 									});
 								};
-								db.collection(collection).findOne(JSON.parse(assembledQuery), (err, result) => {
+								db.collection(collection).findOne(assembledQuery, (err, result) => {
 									if(err) {
 										res.statusCode = 401;
 										res.end(JSON.stringify({
@@ -137,7 +138,7 @@ function webserver() {
 											result: 'Could not find record '+query+' to update in collection '+collection
 										}));
 									}
-									update(Object.assign({}, result, JSON.parse(assembledWriteData)));
+									update(Object.assign({}, result, assembledWriteData));
 								});
 								break;
 							};
