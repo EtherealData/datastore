@@ -47,8 +47,9 @@ function webserver() {
 					assembledWriteData = assemble(writeData),
 					handle = () => {
 
-						(typeof assembledQuery == 'string') && JSON.parse(assembledQuery);
-						(typeof assembledWriteData == 'string') && JSON.parse(assembledWriteData);
+						(typeof assembledQuery == 'string' || assembledQuery instanceof String) && JSON.parse(assembledQuery);
+						(typeof assembledQuery == 'string' || assembledQuery instanceof String) && console.log('instance of string in assembledQuery');
+						(typeof assembledWriteData == 'string' || assembledWriteData instanceof String) && JSON.parse(assembledWriteData);
 							
 						switch(operation) {
 							case 'create':
