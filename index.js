@@ -160,7 +160,7 @@ function webserver() {
         req.on('end', () => {
         	// assembledQuery && JSON.parse(assembledQuery);
           // assembledWriteData && JSON.parse(assembledWriteData);
-          console.log('ending request', data, assembledWriteData)
+          console.log('ending request', assembledWriteData)
           handle();
         });
         return;
