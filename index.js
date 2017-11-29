@@ -156,7 +156,7 @@ function webserver() {
         		assembledQuery = assembledQuery || '';
         		assembledQuery += data;
         	} else {
-        		assembledWriteData = assembledWriteData || '';
+        		assembledWriteData = '';
             assembledWriteData += data;
         	}
         });
