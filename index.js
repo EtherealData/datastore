@@ -31,7 +31,6 @@ function webserver() {
 					assemble = (qs) =>{
 						let assembled = {},
 								properties = decodeURI(qs).split(',');
-								console.log('trying to assemble following query string - ', qs, properties);
 						if(!qs || properties.length < 1) {
 							return null;
 						}
@@ -148,8 +147,6 @@ function webserver() {
 			res.setHeader('Content-Type', 'application/json');
 			res.setHeader("Access-Control-Allow-Origin", "*");
 
-			console.log(req.body)
-
 			if (req.method == 'POST') {
         req.on('data', (data) => {
         	if(!query) {
@@ -162,7 +159,8 @@ function webserver() {
         });
         req.on('end', () => {
         	// assembledQuery && JSON.parse(assembledQuery);
-          assembledWriteData && JSON.parse(assembledWriteData);
+          // assembledWriteData && JSON.parse(assembledWriteData);
+          console.log('ending request', data, assembledWriteData)
           handle();
         });
         return;
