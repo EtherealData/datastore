@@ -115,6 +115,7 @@ function webserver() {
 								break;
 							case 'update':
 								let update = (mergedWriteData) => {
+									console.log('updating merged write data', assembledQuery, mergedWriteData)
 									db.collection(collection).updateOne(assembledQuery, mergedWriteData, (err, result) => {
 										if(err) {
 											res.statusCode = 401;
