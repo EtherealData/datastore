@@ -162,7 +162,7 @@ function webserver() {
         });
         req.on('end', () => {
         	// assembledQuery && JSON.parse(assembledQuery);
-         //  assembledWriteData && JSON.parse(assembledWriteData);
+          assembledWriteData && JSON.parse(assembledWriteData);
           handle();
         });
         return;
@@ -171,8 +171,6 @@ function webserver() {
 			return;
 	});
 }
-
-
 
 function init() {
 	database((_db)=>{
