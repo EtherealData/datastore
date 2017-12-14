@@ -142,7 +142,7 @@ function webserver() {
 								});
 								break;
 						case 'upload':
-							if(!mergedWriteData){
+							if(!mergedWriteData || mergedWriteData.length){
 								res.statusCode = 401;
 								res.end(JSON.stringify({
 									status: 'error',
