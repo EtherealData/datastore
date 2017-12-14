@@ -169,13 +169,14 @@ function webserver() {
 									});
 
 									db.collection(collection).updateOne(assembledQuery, {[filename]: fsDirectory}, (err, result) => {
-										// console.log(err, )
-										res.statusCode = 200;
-										res.end(JSON.stringify({
-											status:'success',
-											result: 'file added to record'
-										}))
-									})
+
+									});
+									// console.log(err, )
+									res.statusCode = 200;
+									res.end(JSON.stringify({
+										status:'success',
+										result: 'file added to record'
+									}))
 
 							break;
 							};
