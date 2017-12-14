@@ -142,7 +142,14 @@ function webserver() {
 								});
 								break;
 						case 'upload':
-
+							if(!mergedWriteData){
+								res.statusCode = 401;
+								res.end(JSON.stringify({
+									status: 'error',
+									result: 'Need to send base64 property and filename property'
+								}))
+								return;
+							}
 							let blob = mergedWriteData && mergedWriteData['base64'] || null,
 									filename = mergedWriteData && mergedWriteData['filename'] || null,
 									fsDirectory = '/var/datastore/uploads/'+filename;
@@ -152,7 +159,8 @@ function webserver() {
 										res.end(JSON.stringify({
 											status: 'error',
 											result: 'Need to send base64 property and filename property'
-										}))
+										}));
+										return;
 									}
 
 
