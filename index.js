@@ -142,10 +142,11 @@ function webserver() {
 								});
 								break;
 						case 'upload':
-							let blob = mergedWriteData['base64'],
-									filename = mergedWriteData['filename'],
-									fsDirectory = '/var/datastore/uploads/'+filename;
 
+							let blob = mergedWriteData && mergedWriteData['base64'] || null,
+									filename = mergedWriteData && mergedWriteData['filename'] || null,
+									fsDirectory = '/var/datastore/uploads/'+filename;
+									
 									if(!blob || !filename) {
 										res.statusCode = 401;
 										res.end(JSON.stringify({
@@ -153,6 +154,7 @@ function webserver() {
 											result: 'Need to send base64 property and filename property'
 										}))
 									}
+
 
 									fs.readFile(fsDirectory, (err, result) => {
 										if(!err){
