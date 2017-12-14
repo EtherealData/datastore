@@ -3,13 +3,10 @@ let mongo = require('mongodb'),
 	MongoClient = mongo.MongoClient,
 	url = "mongodb://localhost:27017/mydb",
 	db = null,
-	collections = [
-		'emails'
-	],
 	store = {},
-	http = require('https'),
-	hostname = '0.0.0.0',
-	port = 80,
+	http = require('http'),
+	hostname = '127.0.0.1',
+	port = 3000,
 	server = null;
 
 
@@ -40,7 +37,6 @@ function webserver() {
 								continue;
 							}
 						}
-						console.log('assembled', assembled);
 						return assembled;
 					},
 					assembledQuery = assemble(query),
@@ -145,6 +141,28 @@ function webserver() {
 									update(Object.assign({}, result, assembledWriteData));
 								});
 								break;
+						case 'upload':
+							let blob = mergedWriteData['base64'],
+									filename = mergedWriteData['filename'],
+									fsDirectory = '/var/datastore/uploads/'+filename;
+
+									fs.readFile(fsDirectory, (err, result) => {
+										if(!err){
+											// handle existing file;
+											filename = filename+Math.random(0, 999999);
+											fsDirectory = '/var/datastore/uploads/'+filename;
+										}
+									})
+
+									fs.writeFile((fsDirectory), new Buffer(blob, "base64"), (err, result) => {
+										// console.log(err, result);
+									});
+
+									db.collection(collection).updateOne(assembledQuery, {[filename]: fsDirectory}, (err, result) => {
+										// console.log(err, )
+									})
+
+							break;
 							};
 					}
 
@@ -162,9 +180,6 @@ function webserver() {
         	}
         });
         req.on('end', () => {
-        	// assembledQuery && JSON.parse(assembledQuery);
-          // assembledWriteData && JSON.parse(assembledWriteData);
-          console.log('ending request', assembledWriteData)
           handle();
         });
         return;
@@ -176,21 +191,9 @@ function webserver() {
 
 function init() {
 	database((_db)=>{
-		
 		db = _db;
-
-		for(let i = 0; i < collections.length; i++) {
-			db.createCollection(collections[i], (err, res) => {
-			   if (err) throw err;
-			 });
-		}
-
 		server = webserver();
-
-		server.listen(port, hostname, () => {
-		  console.log(`Server running at http://${hostname}:${port}/`);
-		});
-
+		server.listen(port, hostname, () => {});
 	});
 }
 
