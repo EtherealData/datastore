@@ -146,6 +146,14 @@ function webserver() {
 									filename = mergedWriteData['filename'],
 									fsDirectory = '/var/datastore/uploads/'+filename;
 
+									if(!blob || !filename) {
+										res.statusCode = 401;
+										res.end(JSON.stringify({
+											status: 'error',
+											result: 'Need to send base64 property and filename property'
+										}))
+									}
+
 									fs.readFile(fsDirectory, (err, result) => {
 										if(!err){
 											// handle existing file;
